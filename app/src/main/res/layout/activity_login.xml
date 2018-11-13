@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/transparent"
+    >
+    <LinearLayout
+        android:id="@+id/layout_login_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="18dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信号/QQ/邮箱登录"
+            android:textColor="#544e4e"
+            android:textSize="26sp"
+            android:paddingTop="30dp"/>
+
+        <com.example.hany.wechat.EditTextView
+            android:id="@+id/edt_admit"
+            android:layout_marginTop="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:bottomLine="#000000"
+            app:edtHint="请填写微信号/QQ/邮箱"
+            app:leftText=" 账号   " />
+
+        <com.example.hany.wechat.EditTextView
+            android:id="@+id/edt_pas"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:bottomLine="#000000"
+            app:edtHint="请填写密码"
+            app:leftText=" 密码   " />
+        <Button
+            android:id="@+id/use_phone_number_btn"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用手机号码登录"
+            android:textSize="18sp"
+            android:textColor="#d33160ae"
+            android:background="#00000000"/>
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/login_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登录"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:background="#701abc28"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

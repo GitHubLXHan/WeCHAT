@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyEditText">
+        <attr name="lineColor" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="EditTextView">
+        <attr name="leftText" format="string"/>
+        <attr name="bottomLine" format="color" />
+        <attr name="edtHint" format="string"/>
+        <attr name="edtWidth" format="integer" />
+        <attr name="edtHeight" format="integer" />
+    </declare-styleable>
+</resources>

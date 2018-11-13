@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/main_bg"
+
+    >
+
+    <Button
+        android:id="@+id/main_login_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:background="#29b905"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintDimensionRatio="16:6"
+
+        />
+
+    <Button
+        android:id="@+id/main_register_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="注册"
+        android:textColor="#2c2828"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:background="#f0eaea"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintDimensionRatio="16:6"
+
+        />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NoActionBarActivity" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+    <style name="LoginStyle" parent="AppTheme">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+
+</resources>
