@@ -12,15 +12,23 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoActionBarActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/LoginStyle"></activity>
-        <activity android:name=".NearListActivity"></activity>
+            android:theme="@style/LoginStyle">
+
+        </activity>
+        <activity android:name=".NearListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MsgActivity">
+
+        </activity>
     </application>
 
 </manifest>
