@@ -99,8 +99,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, NearListActivity.class);
-                intent.putExtra("admit", String.valueOf(admitEdt.getText()));
-                intent.putExtra("pas", String.valueOf(pasEdt.getText()));
                 startActivity(intent);
             }
         });

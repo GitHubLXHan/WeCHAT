@@ -21,8 +21,6 @@ import java.util.List;
 
 public class NearListActivity extends AppCompatActivity {
 
-    private TextView mAdmitTxt;
-    private TextView mPasTxt;
     private List<NearContact> mNearContactList = new ArrayList<>();
 
     @Override
@@ -47,18 +45,6 @@ public class NearListActivity extends AppCompatActivity {
         NearContactAdapter adapter = new NearContactAdapter(mNearContactList);
         // 设置适配器
         recyclerView.setAdapter(adapter);
-//        mAdmitTxt = findViewById(R.id.txt_send_admit);
-//        mPasTxt = findViewById(R.id.txt_send_pas);
-//
-//
-//        Intent intent = getIntent();
-//        String admit = intent.getStringExtra("admit");
-//        String pas = intent.getStringExtra("pas");
-//        admit = "你输入的账号为：" + admit;
-//        pas = "你输入的密码为：" + pas;
-//
-//        mAdmitTxt.setText(admit);
-//        mPasTxt.setText(pas);
     }
 
 
