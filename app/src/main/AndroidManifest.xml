@@ -11,14 +11,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/NoActionBarActivity">
-
-        </activity>
+            android:theme="@style/NoActionBarActivity" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/LoginStyle">
-
-        </activity>
+            android:theme="@style/LoginStyle" />
         <activity android:name=".NearListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MsgActivity">
+        <activity android:name=".MsgActivity" />
+        <activity android:name=".InsertDataActivity">
 
         </activity>
     </application>
