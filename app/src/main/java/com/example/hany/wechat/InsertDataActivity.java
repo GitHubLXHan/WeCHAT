@@ -30,11 +30,8 @@ public class InsertDataActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_insert_data);
 
         initView(); // 初始化控件
-        initDB(); // 初始化数据库帮助类
-
-
+        mHelper = new MyDatabaseHelper(this, "WeChat.db", null, 3); // 初始化数据库帮助类
     }
-
 
     @Override
     public void onClick(View view) {
@@ -74,12 +71,6 @@ public class InsertDataActivity extends AppCompatActivity implements View.OnClic
 //        mImg.setImageResource(imgId);
     }
 
-    /**
-     * 初始化数据库帮助类
-     */
-    private void initDB() {
-        mHelper = new MyDatabaseHelper(this, "WeChat.db", null, 3);
-    }
 
     /**
      * 打开数据库
@@ -156,7 +147,6 @@ public class InsertDataActivity extends AppCompatActivity implements View.OnClic
         db.insert("Near", null, values);
         values.clear();
         Toast.makeText(this, "插入成功", Toast.LENGTH_SHORT).show();
-
     }
 
     private void queryData() {
@@ -181,7 +171,6 @@ public class InsertDataActivity extends AppCompatActivity implements View.OnClic
         } else {
             Toast.makeText(this, "查询失败", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void deleteAllData(){
@@ -189,11 +178,9 @@ public class InsertDataActivity extends AppCompatActivity implements View.OnClic
             Toast.makeText(this, "请先打开数据库", Toast.LENGTH_SHORT).show();
             return;
         }
-
         db.execSQL("delete from Near");
         Toast.makeText(this, "删除数据成功", Toast.LENGTH_SHORT).show();
     }
-
 
 }
 

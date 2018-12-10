@@ -36,9 +36,9 @@ public class NearListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         // 添加分割线
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-            //第一种方式：添加Android默认分割线
+        //第一种方式：添加Android默认分割线
 //        recyclerView.addItemDecoration(decoration);
-            //第二种方式：添加自定义分割线
+        //第二种方式：添加自定义分割线
         decoration.setDrawable(ContextCompat.getDrawable(this,R.drawable.divider_line));
         recyclerView.addItemDecoration(decoration);
         // 创建一个适配器

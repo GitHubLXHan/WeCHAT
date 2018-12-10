@@ -23,13 +23,13 @@ import java.util.List;
  */
 public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.ViewHolder> {
 
-    private List<NearContact> mNearContactList;
+    private List<NearContact> mNearContactList;     // 列表数据链表
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageButton nearContactImage;
-        TextView nearContactName;
-        TextView nearContactSummary;
-        TextView nearContactTime;
+        ImageButton nearContactImage;   // 显示头像的ImageButton控件
+        TextView nearContactName;       // 显示名字的TextViwe控件
+        TextView nearContactSummary;    // 显示消息摘要的TextView控件
+        TextView nearContactTime;       // 显示消息接受/发送时间的TextView控件
         LinearLayout nearListLayout;
 
         public ViewHolder(View view) {
