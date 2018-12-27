@@ -1,5 +1,7 @@
 package com.example.hany.wechat.Adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hany.wechat.Collector.ActivityCollector;
 import com.example.hany.wechat.JavaBean.NearContact;
+import com.example.hany.wechat.MsgActivity;
+import com.example.hany.wechat.NearListActivity;
 import com.example.hany.wechat.R;
 
 import java.util.List;
@@ -59,13 +64,20 @@ public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.
         holder.nearContactImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "你点击了头像", Toast.LENGTH_SHORT).show();
+                int position = holder.getAdapterPosition();
+                Toast.makeText(view.getContext(), "你点击了" + mNearContactList.get(position).getName() + "的头像", Toast.LENGTH_SHORT).show();
             }
         });
         holder.nearListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
+                NearContact nearContact = mNearContactList.get(position);
+                Intent intent= new Intent(parent.getContext(), MsgActivity.class);
+                intent.putExtra("NearContract", nearContact);
+                intent.putExtra("position", position);
+//                parent.getContext().startActivity(intent);
+                ((Activity)parent.getContext()).startActivityForResult(intent, 1); // 在Adapter中调用startActivityForResult()方法
                 Toast.makeText(parent.getContext(), "你点击了第" + position + "项", Toast.LENGTH_SHORT).show();
             }
         });

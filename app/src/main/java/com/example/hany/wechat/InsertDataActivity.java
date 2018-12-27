@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.hany.wechat.Util.MyDatabaseHelper;
 
-public class InsertDataActivity extends AppCompatActivity implements View.OnClickListener{
+public class InsertDataActivity extends BaseActivity implements View.OnClickListener{
 
     private MyDatabaseHelper mHelper;
     private Button mCreateDatabase;
@@ -30,7 +30,7 @@ public class InsertDataActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_insert_data);
 
         initView(); // 初始化控件
-        mHelper = new MyDatabaseHelper(this, "WeChat.db", null, 3); // 初始化数据库帮助类
+        mHelper = new MyDatabaseHelper(this, "WeChat.db", null, 2); // 初始化数据库帮助类
     }
 
     @Override

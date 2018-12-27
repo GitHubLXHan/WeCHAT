@@ -1,4 +1,4 @@
-package com.example.hany.wechat;
+package com.example.hany.wechat.CustomView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.hany.wechat.R;
+
 /**
  * @author 6小h
  * @e-mail 1026310040@qq.com
@@ -35,7 +38,7 @@ public class EditTextView extends LinearLayout{
     public EditTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setOrientation(HORIZONTAL);
-        setWillNotDraw(false); // 语序onDraw()函数运行
+        setWillNotDraw(false); // 允许onDraw()函数运行
         LayoutInflater.from(context).inflate(R.layout.view_edt, this, true);
 
         initView();

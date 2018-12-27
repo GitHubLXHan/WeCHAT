@@ -2,30 +2,36 @@ package com.example.hany.wechat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.example.hany.wechat.Collector.ActivityCollector;
 import com.example.hany.wechat.Util.StatusBarUtil;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
-    private LinearLayout admitLayout;
-    private LinearLayout pasLayout;
-    private EditText admitEdt;
-    private EditText pasEdt;
+    private LinearLayout loginAdmitLayout;
+    private LinearLayout loginPasLayout;
+    private EditText loginAdmitEdt;
+    private EditText loginPasEdt;
     private Button loginBtn;
-    private Button usePhoneNumBtn;
+    private CheckBox mRememberCb;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,29 @@ public class LoginActivity extends AppCompatActivity {
         // 设置标题栏左边按钮
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.mipmap.ic_cancel);
+
+        // 设置原先记住的账号密码
+        setAdmitPas();
+
+
+    }
+
+    /**
+     * 设置原先记住的账号密码
+     */
+    private void setAdmitPas() {
+        mRememberCb = findViewById(R.id.cb_remember);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isRemember = preferences.getBoolean("remember_password", false);
+        // 当设置了记住密码时
+        if (isRemember) {
+            // 将账号和密码都设置到文本中
+            String admit = preferences.getString("admit", "");
+            String password = preferences.getString("password","");
+            loginAdmitEdt.setText(admit);
+            loginPasEdt.setText(password);
+            mRememberCb.setChecked(true);
+        }
     }
 
     /**
@@ -70,7 +99,6 @@ public class LoginActivity extends AppCompatActivity {
                     break;
             }
         }
-
     }
 
     /**
@@ -78,15 +106,15 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void initView() {
         // 因为两个输入框是自定义LinearLayout布局，所以加载两个输入框的布局
-        admitLayout = findViewById(R.id.edt_admit);
-        pasLayout = findViewById(R.id.edt_pas);
+        loginAdmitLayout = findViewById(R.id.edt_admit);
+        loginPasLayout = findViewById(R.id.edt_pas);
         // 获取两个布局之下的EditText控件
-        admitEdt = (EditText) admitLayout.getChildAt(1);
-        pasEdt = (EditText) pasLayout.getChildAt(1);
+        loginAdmitEdt = (EditText) loginAdmitLayout.getChildAt(1);
+        loginPasEdt = (EditText) loginPasLayout.getChildAt(1);
+        loginPasEdt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
         //  登录按钮
         loginBtn = findViewById(R.id.login_login_btn);
-        // 使用手机号码登录
-        usePhoneNumBtn = findViewById(R.id.use_phone_number_btn);
+
     }
 
     /**
@@ -98,22 +126,25 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 若勾上记住密码选项框则保存账号密码，否则清除SharedPreference文件的数据
+                editor = preferences.edit();
+                if (mRememberCb.isChecked()) {
+                    editor.putBoolean("remember_password", true);
+                    editor.putString("admit", loginAdmitEdt.getText().toString());
+                    editor.putString("password", loginPasEdt.getText().toString());
+                } else {
+                    editor.clear();
+                }
+                editor.apply();
+
                 Intent intent = new Intent(LoginActivity.this, NearListActivity.class);
                 startActivity(intent);
             }
         });
 
-        // 设置使用手机号码按钮点击监听器
-        usePhoneNumBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "此功能暂未开通", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         // 设置账号输入框TextWatcher监听器，监听输入款输入状态，在这里用到afterTextChanged函数即可
         final boolean[] haveText = {false, false}; // 设置一个标记，当haveText为true，表示输入框里有内容
-        admitEdt.addTextChangedListener(new TextWatcher() {
+        loginAdmitEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) { }
 
@@ -138,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        pasEdt.addTextChangedListener(new TextWatcher() {
+        loginPasEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) { }
 
@@ -163,7 +194,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCollector.finishAll();
     }
 
     /**

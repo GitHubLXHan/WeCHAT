@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".MsgActivity">
+
+    <LinearLayout
+        android:id="@+id/layout_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="left"
+        android:layout_marginBottom="3dp"
+        >
+        <com.example.hany.wechat.CustomView.ProfileImageView
+            android:id="@+id/img_left"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/head_sculpture_1"
+      />
+        <TextView
+            android:id="@+id/txt_left_msg"
+            android:background="@drawable/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:text="哈哈哈"/>
+    </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/layout_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="3dp"
+        >
+
+        <TextView
+            android:id="@+id/txt_right_msg"
+            android:background="@drawable/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="哦哦量是sfsaafa"
+            android:gravity="center|left"
+            android:layout_gravity="center"
+           />
+
+        <com.example.hany.wechat.CustomView.ProfileImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/myprofile"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

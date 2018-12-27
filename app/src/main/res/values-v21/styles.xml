@@ -2,7 +2,7 @@
 <resources>
     <style name="NoActionBarActivity" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
-    <style name="LoginStyle" parent="AppTheme">
+    <style name="LoginAndRegisterStyle" parent="AppTheme">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>

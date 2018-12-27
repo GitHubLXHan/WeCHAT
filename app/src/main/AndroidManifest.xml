@@ -9,21 +9,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BaseActivity">
+
+        </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/NoActionBarActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/LoginStyle" />
-        <activity android:name=".NearListActivity">
+            android:theme="@style/NoActionBarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MsgActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/LoginAndRegister" />
+        <activity
+            android:name=".NearListActivity"
+            android:launchMode="singleTask">
+
+        </activity>
+        <activity android:name=".MsgActivity">
+
+        </activity>
         <activity android:name=".InsertDataActivity">
+
+        </activity>
+
+        <provider
+            android:name=".Content.MyContentProvider"
+            android:authorities="com.example.hany.wechat.Content.MyContentProvider"
+            android:enabled="true"
+            android:exported="true">
+
+        </provider>
+
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/LoginAndRegister"
+            >
 
         </activity>
     </application>

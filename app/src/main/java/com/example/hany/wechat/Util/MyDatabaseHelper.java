@@ -23,6 +23,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             + "time text, "
             + "summary text)";
 
+    private static final String CREATE_RECORD =
+            "create table Record("
+            + "id integer primary key autoincrement ,"
+            + "userId integer, "
+            + "time text, "
+            + "content text, "
+            + "type)";
+
+//    private static final String CREATE_USER =
+//            "create table User("
+//            + "id integer primary key autoincrement, "
+//            + "";
+
+
     private Context mContext;
 
     public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -39,8 +53,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table Near");
-        db.execSQL(CREATE_NEAR);
+//        db.execSQL("drop table Near");
+//        db.execSQL(CREATE_NEAR);
+//        db.execSQL("drop table Record");
+        db.execSQL(CREATE_RECORD);
         String TAG = "版本";
         Log.d(TAG, "onUpgrade: " + String.valueOf(oldVersion) + "  " + String.valueOf(newVersion));
     }
