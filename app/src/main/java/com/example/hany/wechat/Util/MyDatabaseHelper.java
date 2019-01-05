@@ -18,29 +18,45 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_NEAR =
             "create table Near("
             + "id integer primary key autoincrement, "
-            + "imgName text, "
+            + "imgId integer, "
             + "name text, "
             + "time text, "
-            + "summary text)";
+            + "summary text,"
+            + "userId text, "
+            + "contractId text)";
 
     private static final String CREATE_RECORD =
             "create table Record("
             + "id integer primary key autoincrement ,"
-            + "userId integer, "
+            + "userId text, "
             + "time text, "
             + "content text, "
-            + "type)";
+            + "type integer, "
+            + "contractId text)";
 
-//    private static final String CREATE_USER =
-//            "create table User("
-//            + "id integer primary key autoincrement, "
-//            + "";
+    private static final String CREATE_USER =
+            "create table User("
+            + "id integer primary key autoincrement, "
+            + "userId text, "
+            + "userName text, "
+            + "password text, "
+            + "createTime text, "
+            + "imgName text)";
+
+    private static final String CREATE_CONTRACT =
+            "create table Contract("
+            + "id integer primary key autoincrement, "
+            + "userId text, "
+            + "contractId text, "
+            + "contractName text, "
+            + "addTime text, "
+            + "imgName text)";
 
 
     private Context mContext;
 
-    public MyDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MyDatabaseHelper(Context context) {
+        super(context, "WeChat.db", null, 1);
         this.mContext = context;
     }
 
@@ -48,6 +64,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_NEAR);
+        db.execSQL(CREATE_USER);
+        db.execSQL(CREATE_RECORD);
+        db.execSQL(CREATE_CONTRACT);
         Toast.makeText(mContext, "成功创建数据库", Toast.LENGTH_SHORT).show();
     }
 
@@ -56,7 +75,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 //        db.execSQL("drop table Near");
 //        db.execSQL(CREATE_NEAR);
 //        db.execSQL("drop table Record");
-        db.execSQL(CREATE_RECORD);
+//        db.execSQL(CREATE_RECORD);
+//        db.execSQL("drop table User");
+//
+//        db.execSQL(CREATE_USER);
         String TAG = "版本";
         Log.d(TAG, "onUpgrade: " + String.valueOf(oldVersion) + "  " + String.valueOf(newVersion));
     }

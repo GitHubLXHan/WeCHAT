@@ -11,10 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hany.wechat.Collector.ActivityCollector;
-import com.example.hany.wechat.JavaBean.NearContact;
+import com.example.hany.wechat.JavaBean.Near;
 import com.example.hany.wechat.MsgActivity;
-import com.example.hany.wechat.NearListActivity;
 import com.example.hany.wechat.R;
 
 import java.util.List;
@@ -23,12 +21,13 @@ import java.util.List;
  * @author 6小h
  * @e-mail 1026310040@qq.com
  * @date 2018/11/14 20:51
- * @filName NearContactAdapter
+ * @filName NearAdapter
  * @describe ...
  */
-public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.ViewHolder> {
+public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
 
-    private List<NearContact> mNearContactList;     // 列表数据链表
+    private List<Near> mNearList;     // 列表数据链表
+    private String userId;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageButton nearContactImage;   // 显示头像的ImageButton控件
@@ -47,8 +46,9 @@ public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.
         }
     }
 
-    public NearContactAdapter(List<NearContact> list) {
-        this.mNearContactList = list;
+    public NearAdapter(List<Near> list, String userId) {
+        this.mNearList = list;
+        this.userId = userId;
     }
 
     /**
@@ -65,17 +65,19 @@ public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                Toast.makeText(view.getContext(), "你点击了" + mNearContactList.get(position).getName() + "的头像", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "你点击了" + mNearList.get(position).getName() + "的头像", Toast.LENGTH_SHORT).show();
             }
         });
         holder.nearListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
-                NearContact nearContact = mNearContactList.get(position);
+                Near near = mNearList.get(position);
                 Intent intent= new Intent(parent.getContext(), MsgActivity.class);
-                intent.putExtra("NearContract", nearContact);
+                intent.putExtra("near", near);
                 intent.putExtra("position", position);
+                intent.putExtra("userId", userId);
+                intent.putExtra("whereFrom", "NearFragment");
 //                parent.getContext().startActivity(intent);
                 ((Activity)parent.getContext()).startActivityForResult(intent, 1); // 在Adapter中调用startActivityForResult()方法
                 Toast.makeText(parent.getContext(), "你点击了第" + position + "项", Toast.LENGTH_SHORT).show();
@@ -90,11 +92,11 @@ public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.
      * @param position
      */
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NearContact nearContact = mNearContactList.get(position);
-        holder.nearContactImage.setImageResource(nearContact.getImgId());
-        holder.nearContactName.setText(nearContact.getName());
-        holder.nearContactSummary.setText(nearContact.getSummary());
-        holder.nearContactTime.setText(nearContact.getTime());
+        Near near = mNearList.get(position);
+        holder.nearContactImage.setImageResource(near.getImgId());
+        holder.nearContactName.setText(near.getName());
+        holder.nearContactSummary.setText(near.getSummary());
+        holder.nearContactTime.setText(near.getTime());
     }
 
     /**
@@ -103,6 +105,6 @@ public class NearContactAdapter extends RecyclerView.Adapter<NearContactAdapter.
      */
     @Override
     public int getItemCount() {
-        return mNearContactList.size();
+        return mNearList.size();
     }
 }

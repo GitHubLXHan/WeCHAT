@@ -13,27 +13,22 @@ import android.os.Parcelable;
 public class Msg implements Parcelable{
 
     public static int TYPE_RECEIVED = 0;
-
     public static int TYPE_SEND = 1;
-
     private int id;
-
     private int imgId;
-
     private String content;
-
     private String time;
-
-    private int userId;
-
+    private String userId;
+    private String contractId;
     private int type;
 
-    public Msg(String content,String time, int type, int userId, int imgId) {
+    public Msg(String content,String time, int type, String userId, String contractId, int imgId) {
 //        this.id = id;
         this.content = content;
         this.time = time;
         this.type = type;
         this.userId = userId;
+        this.contractId = contractId;
         this.imgId = imgId;
     }
 
@@ -49,11 +44,11 @@ public class Msg implements Parcelable{
         this.time = time;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -89,6 +84,14 @@ public class Msg implements Parcelable{
         this.imgId = imgId;
     }
 
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,7 +103,8 @@ public class Msg implements Parcelable{
         parcel.writeInt(imgId);
         parcel.writeString(content);
         parcel.writeString(time);
-        parcel.writeInt(userId);
+        parcel.writeString(userId);
+        parcel.writeString(contractId);
         parcel.writeInt(type);
     }
 
@@ -113,7 +117,8 @@ public class Msg implements Parcelable{
             msg.imgId = parcel.readInt();
             msg.content = parcel.readString();
             msg.time = parcel.readString();
-            msg.userId = parcel.readInt();
+            msg.userId = parcel.readString();
+            msg.contractId = parcel.readString();
             msg.type = parcel.readInt();
             return msg;
         }

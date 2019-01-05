@@ -7,26 +7,29 @@ import android.os.Parcelable;
  * @author 6小h
  * @e-mail 1026310040@qq.com
  * @date 2018/11/14 20:47
- * @filName NearContact
+ * @filName Near
  * @describe ...
  */
-public class NearContact implements Parcelable{
+public class Near implements Parcelable{
 
     private int imgId;
     private String name;
     private String summary;
     private String time;
+    private String contractId;
+    private String userId;
     private int id;
 
-    public NearContact(int imgId, String name, String summary, String time, int id) {
+    public Near(int imgId, String name, String summary, String time, String contractId, String userId) {
         this.imgId = imgId;
         this.name = name;
         this.summary = summary;
         this.time = time;
-        this.id = id;
+        this.contractId = contractId;
+        this.userId = userId;
     }
 
-    public NearContact() {}
+    public Near() {}
 
     public int getId() {
         return id;
@@ -68,6 +71,22 @@ public class NearContact implements Parcelable{
         this.time = time;
     }
 
+    public String getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(String contractId) {
+        this.contractId = contractId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,25 +98,29 @@ public class NearContact implements Parcelable{
         parcel.writeString(name);
         parcel.writeString(summary);
         parcel.writeString(time);
+        parcel.writeString(contractId);
+        parcel.writeString(userId);
         parcel.writeInt(id);
     }
 
-    public static final Parcelable.Creator<NearContact> CREATOR = new Parcelable.Creator<NearContact>(){
+    public static final Parcelable.Creator<Near> CREATOR = new Parcelable.Creator<Near>(){
 
         @Override
-        public NearContact createFromParcel(Parcel parcel) {
-            NearContact nearContact = new NearContact();
-            nearContact.imgId = parcel.readInt();
-            nearContact.name = parcel.readString();
-            nearContact.summary = parcel.readString();
-            nearContact.time = parcel.readString();
-            nearContact.id = parcel.readInt();
-            return nearContact;
+        public Near createFromParcel(Parcel parcel) {
+            Near near = new Near();
+            near.imgId = parcel.readInt();
+            near.name = parcel.readString();
+            near.summary = parcel.readString();
+            near.time = parcel.readString();
+            near.contractId = parcel.readString();
+            near.userId = parcel.readString();
+            near.id = parcel.readInt();
+            return near;
         }
 
         @Override
-        public NearContact[] newArray(int i) {
-            return new NearContact[i];
+        public Near[] newArray(int i) {
+            return new Near[i];
         }
     };
 

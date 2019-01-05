@@ -1,8 +1,12 @@
 package com.example.hany.wechat;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
@@ -19,6 +23,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.hany.wechat.Collector.ActivityCollector;
+import com.example.hany.wechat.Util.MyDatabaseHelper;
 import com.example.hany.wechat.Util.StatusBarUtil;
 
 public class LoginActivity extends BaseActivity {
@@ -28,9 +33,14 @@ public class LoginActivity extends BaseActivity {
     private EditText loginAdmitEdt;
     private EditText loginPasEdt;
     private Button loginBtn;
+    private Button toRegisterBtn;
     private CheckBox mRememberCb;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    private MyDatabaseHelper helper;
+    private SQLiteDatabase db;
+    final boolean[] haveText = {false, false}; // 设置一个标记，当haveText为true，表示输入框里有内容
+
 
 
     @Override
@@ -59,6 +69,9 @@ public class LoginActivity extends BaseActivity {
         // 设置原先记住的账号密码
         setAdmitPas();
 
+        // 获取DatabaseHelper对象并且打开数据库
+        helper = new MyDatabaseHelper(this);
+        db = helper.getWritableDatabase();
 
     }
 
@@ -114,7 +127,8 @@ public class LoginActivity extends BaseActivity {
         loginPasEdt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
         //  登录按钮
         loginBtn = findViewById(R.id.login_login_btn);
-
+        // 去注册按钮
+        toRegisterBtn = findViewById(R.id.btn_to_register);
     }
 
     /**
@@ -126,24 +140,43 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 若勾上记住密码选项框则保存账号密码，否则清除SharedPreference文件的数据
-                editor = preferences.edit();
-                if (mRememberCb.isChecked()) {
-                    editor.putBoolean("remember_password", true);
-                    editor.putString("admit", loginAdmitEdt.getText().toString());
-                    editor.putString("password", loginPasEdt.getText().toString());
-                } else {
-                    editor.clear();
-                }
-                editor.apply();
+                // 先判断密码是否正确
+                Cursor cursor = db.rawQuery("select * from User where userId = ?", new String[]{loginAdmitEdt.getText().toString()});
+                cursor.moveToFirst();
+                if (loginPasEdt.getText().toString().equals(cursor.getString(cursor.getColumnIndex("password")))) {
+                    // 密码正确时
+                    // 若勾上记住密码选项框则保存账号密码，否则清除SharedPreference文件的数据
+                    editor = preferences.edit();
+                    if (mRememberCb.isChecked()) {
+                        editor.putBoolean("remember_password", true);
+                        editor.putString("admit", loginAdmitEdt.getText().toString());
+                        editor.putString("password", loginPasEdt.getText().toString());
+                    } else {
+                        editor.clear();
+                    }
+                    editor.apply();
 
-                Intent intent = new Intent(LoginActivity.this, NearListActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    intent.putExtra("open", "near");
+                    intent.putExtra("userId", loginAdmitEdt.getText().toString());
+                    startActivity(intent);
+                } else {
+                    dialog("密码错误");
+                }
+            }
+        });
+
+        // 去登陆按钮监听事件
+        // 打开注册界面
+        toRegisterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
         // 设置账号输入框TextWatcher监听器，监听输入款输入状态，在这里用到afterTextChanged函数即可
-        final boolean[] haveText = {false, false}; // 设置一个标记，当haveText为true，表示输入框里有内容
         loginAdmitEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) { }
@@ -154,19 +187,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 // 设置按钮是否可以点击
-                if (!TextUtils.isEmpty(editable) && haveText[1]) {
-                    haveText[0] = true;
-                    loginBtn.setEnabled(true);
-                    loginBtn.setBackgroundColor(0xf51abc28);
-                } else if (!TextUtils.isEmpty(editable) && !haveText[1]) {
-                    haveText[0] = true;
-                    loginBtn.setEnabled(false);
-                    loginBtn.setBackgroundColor(0x701abc28);
-                } else {
-                    haveText[0] = false;
-                    loginBtn.setEnabled(false);
-                    loginBtn.setBackgroundColor(0x701abc28);
-                }
+                testLoginAdmitEdt(editable);
+
             }
         });
         loginPasEdt.addTextChangedListener(new TextWatcher() {
@@ -179,27 +201,34 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 // 设置按钮是否可以点击
-                if (!TextUtils.isEmpty(editable) && haveText[0]) {
-                    haveText[1] = true;
-                    loginBtn.setEnabled(true);
-                    loginBtn.setBackgroundColor(0xf51abc28);
-                } else if (!TextUtils.isEmpty(editable) && !haveText[0]) {
-                    haveText[1] = true;
-                    loginBtn.setEnabled(false);
-                    loginBtn.setBackgroundColor(0x701abc28);
+                testLoginPasEdt(editable);
+            }
+        });
+
+        // 焦点监听事件
+        loginAdmitEdt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    // 获取焦点时
+
                 } else {
-                    haveText[1] = false;
-                    loginBtn.setEnabled(false);
-                    loginBtn.setBackgroundColor(0x701abc28);
+                    // 失去焦点时
+                    if (!isExistUser()) {
+                        // 当账号不存在时，弹出警示框并置空输入框
+                        dialog("该账号不存在");
+                        loginAdmitEdt.setText("");
+                    }
                 }
             }
         });
+
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ActivityCollector.finishAll();
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 
     /**
@@ -217,6 +246,80 @@ public class LoginActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 判断账号输入框是都有正确的账号而设定登录按钮是否可以点击。
+     * 规则是用haveText布尔数组记录两个框是否有值，当有值则为true，
+     * 否则为false然后当haveText数组中两个布尔值都为true时，
+     * 则设置按钮可点击并且颜色比原颜色深。
+     * @param editable
+     */
+    private void testLoginAdmitEdt(Editable editable) {
+        if (!TextUtils.isEmpty(editable) && haveText[1]) {
+            haveText[0] = true;
+            loginBtn.setEnabled(true);
+            loginBtn.setBackgroundColor(0xf51abc28);
+        } else if (!TextUtils.isEmpty(editable) && !haveText[1]) {
+            haveText[0] = true;
+            loginBtn.setEnabled(false);
+            loginBtn.setBackgroundColor(0x701abc28);
+        } else {
+            haveText[0] = false;
+            loginBtn.setEnabled(false);
+            loginBtn.setBackgroundColor(0x701abc28);
+        }
+    }
+
+    /**
+     * 判断账号输入框是都有正确的账号而设定登录按钮是否可以点击。
+     * 规则是用haveText布尔数组记录两个框是否有值，当有值则为true，
+     * 否则为false然后当haveText数组中两个布尔值都为true时，
+     * 则设置按钮可点击并且颜色比原颜色深。
+     * @param editable
+     */
+    private void testLoginPasEdt(Editable editable) {
+        if (!TextUtils.isEmpty(editable) && haveText[0]) {
+            haveText[1] = true;
+            loginBtn.setEnabled(true);
+            loginBtn.setBackgroundColor(0xf51abc28);
+        } else if (!TextUtils.isEmpty(editable) && !haveText[0]) {
+            haveText[1] = true;
+            loginBtn.setEnabled(false);
+            loginBtn.setBackgroundColor(0x701abc28);
+        } else {
+            haveText[1] = false;
+            loginBtn.setEnabled(false);
+            loginBtn.setBackgroundColor(0x701abc28);
+        }
+    }
+
+    /**
+     * 判断预登录的账号是否存在
+     * @return
+     */
+    private boolean isExistUser() {
+        Cursor cursor = db.rawQuery("select * from User where userId = ?", new String[]{loginAdmitEdt.getText().toString()});
+        int count = cursor.getCount();
+        cursor.close();
+        return count > 0 ? true : false;
+    }
+
+    /**
+     * 弹出警示框
+     * @param msg
+     */
+    private void dialog(String msg) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        builder.setTitle("警告");
+        builder.setMessage(msg);
+        builder.setCancelable(false);
+        builder.setPositiveButton("重新输入", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
+    }
 
     //    private void addStatusViewWithColor(Activity activity, int color) {
 //        ViewGroup contentView = activity.findViewById(android.R.id.content);

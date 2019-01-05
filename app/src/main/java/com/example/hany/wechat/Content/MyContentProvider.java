@@ -31,7 +31,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     public boolean onCreate() {
-        helper = new MyDatabaseHelper(getContext(), "WeChat.db",null, 3 );
+        helper = new MyDatabaseHelper(getContext());
         return true;
     }
 

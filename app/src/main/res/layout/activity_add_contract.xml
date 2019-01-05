@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addContractActivity">
+
+    <Button
+        android:id="@+id/btn_add_contract_create_database"
+        android:text="创建或打开数据库"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_add_contract_insert_data"
+        android:text="添加好友"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_contract_create_database"/>
+
+    <Button
+        android:id="@+id/btn_add_contract_query_data"
+        android:text="查询"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_contract_insert_data"/>
+
+    <Button
+        android:id="@+id/btn_add_contract_delete_data"
+        android:text="删除全部好友"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_contract_query_data"/>
+
+
+</android.support.constraint.ConstraintLayout>

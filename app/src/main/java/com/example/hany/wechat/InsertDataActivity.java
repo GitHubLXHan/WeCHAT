@@ -20,7 +20,6 @@ public class InsertDataActivity extends BaseActivity implements View.OnClickList
     private Button mInsertDataBtn;
     private Button mQueryDataBtn;
     private Button mDeleteAllDataBtn;
-    private ImageView mImg;
     private SQLiteDatabase db;
 
 
@@ -30,7 +29,7 @@ public class InsertDataActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_insert_data);
 
         initView(); // 初始化控件
-        mHelper = new MyDatabaseHelper(this, "WeChat.db", null, 2); // 初始化数据库帮助类
+        mHelper = new MyDatabaseHelper(this); // 初始化数据库帮助类
     }
 
     @Override

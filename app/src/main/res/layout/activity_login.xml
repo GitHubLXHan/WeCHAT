@@ -52,14 +52,31 @@
             <!--android:textSize="18sp"-->
             <!--android:textColor="#d33160ae"-->
             <!--android:background="#00000000"/>-->
-        <CheckBox
-            android:id="@+id/cb_remember"
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="记住密码"
-            android:textSize="18sp"
-            android:textColor="#7b7979"
-            />
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cb_remember"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:text="记住密码"
+                android:textColor="#7b7979"
+                android:textSize="18sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/btn_to_register" />
+
+            <Button
+                android:id="@+id/btn_to_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="去注册"
+                android:textColor="#7b7979"
+                android:textSize="18sp"
+                app:layout_constraintRight_toRightOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
         <Button
             android:layout_marginTop="20dp"
             android:id="@+id/login_login_btn"
